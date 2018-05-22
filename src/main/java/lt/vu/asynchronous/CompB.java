@@ -9,7 +9,9 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.io.Serializable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 
 @ApplicationScoped
 public class CompB implements Serializable {
@@ -23,9 +25,11 @@ public class CompB implements Serializable {
     public Future<String> asyncMethod() {
         System.out.println("CompB starts working on a big task...");
         try {
-            Thread.sleep(10000); // sleep for 10 seconds
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+
         System.out.println("CompB: big task completed.");
         return new AsyncResult<>("BIG result from component B :)");
     }

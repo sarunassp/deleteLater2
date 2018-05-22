@@ -5,6 +5,7 @@ import lt.vu.entities.Student;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
@@ -12,6 +13,7 @@ public class StudentDAO {
     @Inject
     private EntityManager em;
 
+    @Transactional
     public void create(Student student) {
         em.persist(student);
     }

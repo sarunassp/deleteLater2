@@ -14,21 +14,19 @@ public class CompA implements Serializable {
     @Inject
     private CompB compB;
 
-    private Future<String> resultInFuture = null;
-
     public String callAsyncMethod() throws ExecutionException, InterruptedException {
-        if (resultInFuture == null) {
-            resultInFuture = compB.asyncMethod();
-            return "I just have called CompB. Result is ready? " + resultInFuture.isDone();
-        } else {
-            if (resultInFuture.isDone()) {
-                String result = resultInFuture.get();
-                resultInFuture = null;
-                return "Result is finally ready, and it is: " + result;
-            } else {
-                return "Result is not yet ready... please wait a moment...";
-            }
-        }
+        Future<String> resultInFuture;
+        resultInFuture = compB.asyncMethod();
+        System.out.println("I just have called CompB. Result is ready? " + resultInFuture.isDone());
+
+        if (resultInFuture.isDone()){
+            System.out.println("Result is ready, and it is: " + resultInFuture.get());
+        } else
+            System.out.println("Result is not yet ready... please wait a moment...");
+
+        String result = resultInFuture.get();
+        System.out.println("its finally ready!");
+        return result;
     }
 
 }
